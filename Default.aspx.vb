@@ -41,12 +41,14 @@ Partial Class _Default
 
         'Calculating the Monthly Payment using the Converted Interest Rate and Loan Term. 
         monthlyPayment = loanAmount * interestRate / (1 - Math.Pow((1 + interestRate), (-loanTerm)))
+
         'Displaying the Monthly Payment in the TextBox and converts the Variable to Currency. 
         lblMonthlyPmt.Text = FormatCurrency(monthlyPayment)
 
 
         'Adds Items to List Box, Formats them for Currency and Adds Pad Spacing for each item. 
         loanAmortTbl.Columns.Add("Payment Number", System.Type.GetType("System.String"))
+        loanAmortTbl.Columns.Add("Payment Date", System.Type.GetType("System.String"))
         loanAmortTbl.Columns.Add("Principal Paid", System.Type.GetType("System.String"))
         loanAmortTbl.Columns.Add("Interest Paid", System.Type.GetType("System.String"))
         loanAmortTbl.Columns.Add("New Balance", System.Type.GetType("System.String"))
@@ -54,6 +56,8 @@ Partial Class _Default
 
         'This section uses the for loop to display the Loan Balance and Interest Paid over the Term of the Loan. 
         Dim counterStart As Integer
+        Dim pmtDate As DateTime
+
         For counterStart = 1 To loanTerm
 
             'Performs Calculations for Amortization of loan. 
@@ -61,10 +65,13 @@ Partial Class _Default
             principal = monthlyPayment - interestPaid
             nBalance = loanAmount - principal
             loanAmount = nBalance
+            pmtDate = DateTime.Now.ToShortDateString
+            pmtDate = pmtDate.AddMonths(counterStart)
 
             'Writes the data to a new row in the gridview. 
             tRow = loanAmortTbl.NewRow()
             tRow("Payment Number") = String.Format(counterStart)
+            tRow("Payment Date") = String.Format(pmtDate)
             tRow("Principal Paid") = String.Format("{0:C}", principal)
             ' String.Format("{0:C},principal) formats the variable "prinicpal" as currency (C). 
             tRow("Interest Paid") = String.Format("{0:C}", interestPaid)

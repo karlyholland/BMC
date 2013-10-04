@@ -31,7 +31,7 @@ Inherits="_Default" %>
         <% Else%>
             <br />
 
-        Monthly Payment: &nbsp; <asp:Label ID="lblMonthlyPmt" runat="server"></asp:Label> 
+        Monthly Payment: &nbsp; <span class="bold"></span><asp:Label ID="lblMonthlyPmt" runat="server"></asp:Label> 
          
         <br /><br />          
         <asp:GridView ID="loanGridView" runat="server" />  
